@@ -1,0 +1,19 @@
+#!/bin/bash
+# Auto-downloading gradlew for DESCO App
+
+GRADLE_VERSION="8.4"
+GRADLE_DIR="$HOME/.gradle_dist"
+GRADLE_BIN="$GRADLE_DIR/gradle-$GRADLE_VERSION/bin/gradle"
+
+if [ ! -f "$GRADLE_BIN" ]; then
+    echo ">>> Gradle নেই, ডাউনলোড করা হচ্ছে... (একবারই হবে)"
+    mkdir -p "$GRADLE_DIR"
+    cd "$GRADLE_DIR"
+    curl -L "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" -o gradle.zip
+    unzip -q gradle.zip
+    rm gradle.zip
+    echo ">>> Gradle ডাউনলোড সম্পন্ন!"
+    cd -
+fi
+
+exec "$GRADLE_BIN" "$@"
